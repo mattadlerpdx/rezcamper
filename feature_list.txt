@@ -16,3 +16,10 @@ USER FLOWS
     - USER --> Searches Sites by Camp Type --> Reserve Sites Available
     - USER --> Searches Sites by Camp Type --> Maintains List of Unavailable Sites 
            --> "Listens" For site status --> Reserves Sites Once they become available
+
+
+Define MVP(Minimum Viable Product) #2 from Project Planning
+get/ post /delete user email from DB
+get/ post /delete reservation dates
+get/ post /delete campsite location
+
