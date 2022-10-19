@@ -18,4 +18,6 @@ project
     |   database_update.py
     |   send_msg.py       
 ```
+### Note: Matt, Tito and Kira wrote this together in a google doc, then moved the text over to this file
+
 

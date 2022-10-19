@@ -1,4 +1,6 @@
-## ***Defining our MVP***
+### Note: Matt, Tito and Kira wrote this together in a google doc, then moved the text over to this file
+
+### ***Defining our MVP***
 
 #### Application implementation will: 
 1. User inputs and creates profile
