@@ -1,3 +1,6 @@
+Note: Matt, Tito and Kira wrote this together in a google doc, then moved the text over to this file
+
+
 User selects a campsite to monitor
 User selects the dates they wish to monitor
 User enters information: get/ post /delete user email from DB (taken from UI, our website)
