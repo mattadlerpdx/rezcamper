@@ -1,15 +1,19 @@
 ## 1. USER INTERACTION FEATURES: Stretch Goals 
-	-	User selects a campsite to monitor - our app will offer a menu of campsites we monitor that the person using it can select from. 
-	-	User searches for a campsite to monitor - it would be great if the person using the app could quickly search via keyword to see if a campsite they are interested in is included in our database, then choose to select it 
+	-	User selects a campsite to monitor 
+		- our app will offer a menu of campsites we monitor that the person using it can select from. 
+		-	User searches for a campsite to monitor - it would be great if the person using the app could quickly search via keyword to see if a campsite they are interested in is included in our database, then choose to select it 
 	-	User searches for type of campsite and set of type gets monitored 
 	-	User selects the dates they wish to monitor - a person should be able to select a specific date window for the campsite they selected. This could be selected from a calendar selection tool or they could enter the dates directly. 
 	-	User narrows down which type of campsite they want an alert for: tent, yurt, RV, etc 
-	-	User enters information - Once a campsite location has been selected, the person should be able to provide the e-mail address where they want to receive a status alert. We would gather this email information through a submittable form. It would also be nice to get their name so we could personalize the outgoing e-mail alert. 
+		-	User enters information - Once a campsite location has been selected, the person should be able to provide the e-mail address where they want to receive a status alert. We would gather this email information through a submittable form. It would also be nice to get their name so we could personalize the outgoing e-mail alert. 
 	-	get /post/delete user email from DB(taken from UI, our website)
-	-	Store user information - Keep track of each user’s data for each request: name, email, campsite requested to monitor, dates requested to monitor 
-	-	Update user information - if user decides to change dates/locations, our app allows them to change their current request 
-	-	Send status change alert to user - if a site opens (changes status from filled to reservable), the app immediately sends an e-mail to each user that has made a request on that site, for those dates. 
-	-	Sends recommendations based on sites User is interested in 
+	-	Store user information 
+		- Keep track of each user’s data for each request: name, email, campsite requested to monitor, dates requested to monitor 
+	-	Update user information 
+		- if user decides to change dates/locations, our app allows them to change their current request 
+	-	Send status change alert to user 
+		- if a site opens (changes status from filled to reservable), the app immediately sends an e-mail to each user that has made a request on that site, for those dates. 
+	- Sends recommendations based on sites User is interested in 
  
  
 ### ***DATA GATHERING FEATURES*** 
