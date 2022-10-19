@@ -1,3 +1,6 @@
+Note: Matt, Tito and Kira wrote this together in a google doc, then moved the text over to this file
+
+
 FILES TO INCLUDE:
 DBModel
 __init__.py
