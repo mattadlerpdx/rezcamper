@@ -1,6 +1,6 @@
-USER INTERACTION FEATURES: Stretch Goals
-	•	User selects a campsite to monitor - our app will offer a menu of campsites we monitor that the person using it can select from. 
-	•	User searches for a campsite to monitor - it would be great if the person using the app could quickly search via keyword to see if a campsite they are interested in is included in our database, then choose to select it
+USER INTERACTION FEATURES: Stretch Goals \
+	•	User selects a campsite to monitor - our app will offer a menu of campsites we monitor that the person using it can select from. \
+	•	User searches for a campsite to monitor - it would be great if the person using the app could quickly search via keyword to see if a campsite they are interested in is included in our database, then choose to select it \
 	•	User searches for type of campsite and set of type gets monitored
 	•	User selects the dates they wish to monitor - a person should be able to select a specific date window for the campsite they selected. This could be selected from a calendar selection tool or they could enter the dates directly. 
 	•	User narrows down which type of campsite they want an alert for: tent, yurt, RV, etc
