@@ -1,3 +1,5 @@
+Note: Matt, Tito and Kira wrote this together in a google doc, then moved the text over to this file
+
 User Story #1: 
 As a person looking to receive a campsite status alert, I want to be able to select a campsite location from a menu. So that I can specify which site I am watching to see if it becomes available.
 User Story #2: 
