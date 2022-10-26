@@ -1,0 +1,22 @@
+/*
+    POST https://<DOMAIN>.<ANS> #consider item potency
+    {
+        "email" : "<some_name@domain.ans>"
+        "dates" : ["date1", 
+                   "date2", 
+                   "date3",...]
+        "campground" : ["site1", 
+                        "site2", 
+                        "site3", ...]
+    }
+    
+    PUT https://<Campsite>.gov #consider item potency
+    {
+        "homepage" : "url"
+        "campsites" : [<list>,
+                       <of>,
+                       <campsites>]
+        "dates_reserved" : [list of dates reserved]
+    }
+
+*/
