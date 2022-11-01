@@ -7,7 +7,7 @@ try:
         soup = BeautifulSoup(fp, 'html.parser')
     print(soup)
 except:
-    logging.error(f'Error occured: {error}')
+    logging.error(f'Error occured: {logging.ERROR}')
 
 try:
     home_page = requests.get('https://www.mountainproject.com/', stream=True)
@@ -16,11 +16,11 @@ try:
             for line in home_page.text:
                 fp.write(line)
 except:
-    logging.error(f'Error occured: {error}')
+    logging.error(f'Error occured: {logging.ERROR}')
 
 try: 
     with open('mountain_project.html', 'r') as fp:
         for line in fp:
             print(line)
 except:
-    logging.debug(f'Unsuccessfull Wrote to mountain project file {debug}')
+    logging.debug(f'Unsuccessfull Wrote to mountain project file {logging.DEBUG}')
