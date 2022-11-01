@@ -6,5 +6,5 @@ try:
     with open("index.html") as fp:
         soup = BeautifulSoup(fp, 'html.parser')
     print(soup)
-except logging.raiseExceptions as e:
-    logging.error(f'Error occured: {e}')
+except:
+    logging.error(f'Error occured: {error}')
