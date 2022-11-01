@@ -1,6 +1,6 @@
 
 import unittest
-from src.validateDate import validateDate
+from src import validateDate
 
 
 class TestValidateDate(unittest.TestCase):
