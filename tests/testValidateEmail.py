@@ -6,10 +6,20 @@ from src import validateEmail
 import unittest
 
 class TestValidateEmail(unittest.TestCase):
+
+    def testNoEmailGiven(self):
+        self.assertRaises(Exception, validateEmail, None)
+
+    def testTypeError(self):
+        self.assertRaises(TypeError, validateEmail, {})
+        self.assertRaises(TypeError, validateEmail, False)
+        self.assertRaises(TypeError, validateEmail, [])
+        self.assertRaises(TypeError, validateEmail, 1)
+
     def testValidEmailGiven(self):
         email = "hello@gmail.com"
         checked = validateEmail.validateEmail(email)
-        self.assertEqual(checked, email)
+        self.assertEqual(checked, "hello@gmail.com")
 
     def testValidEmailTypoIsNormalized(self):
         email = "hello@gMail.com"
@@ -22,39 +32,25 @@ class TestValidateEmail(unittest.TestCase):
         self.assertNotEqual(checked, email)
 
     def testNonValidNoAtSymbol(self):
-        email = "hellogmail.com"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "hellogmail.com")
 
     def testNonValidNoUsername(self):
-        email = "@gmail.com"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "@gmail.com")
 
     def testNonValidNoDomain(self):
-        email = "hello@"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "hello@")
 
     def testNonValidNoDotCom(self):
-        email = "hello@gmail"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "hello@gmail")
 
     def testNonValidExtraSymbols(self):
-        email = "hello@@gmail.com"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "hello@@gmail.com")
 
     def testNonValidAllSymbols(self):
-        email = "#$$@%^&%.23"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "#$$@%^&%.23")
 
     def testNonValidNoSymbols(self):
-        email = "just a string"
-        checked = validateEmail.validateEmail(email)
-        self.assertRaises(Exception)
+        self.assertRaises(Exception, validateEmail, "just a string")
 
 if __name__ == '__main__':
    unittest.main()
