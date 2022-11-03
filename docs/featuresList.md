@@ -2,7 +2,7 @@
 
 ### 1. USER INTERACTION FEATURES: Stretch Goals 
 
-#### Work Estimate:
+#### Work Estimate: X-Large (10 - 20) Days
 - User selects a campsite to monitor 
 	- our app will offer a menu of campsites we monitor that the person using it can select from. 
 - User searches for a campsite to monitor - it would be great if the person using the app could quickly search via keyword to see if a campsite they are interested in is included in our database, then choose to select it 
@@ -22,7 +22,7 @@
 
 ### ***DATA GATHERING FEATURES*** 
 
-#### Work Estimate:
+#### Work Estimate: Large (5 - 10 Days)
 - Get campsite information from a campsite reservation site (like KOA, fs.usda.gov, NPS.gov) 
 - regularly scrape data from an existing reservation site, providing a snapshot of all the sites availability status’s. 
 - get/ post /delete reservation dates and availability status info (scrape from website) 
@@ -32,7 +32,7 @@
 
 ### ***DATA STORAGE FEATURES***
 
-#### Work Estimate:
+#### Work Estimate: Medium (2 - 5 Days)
 - Store user information in a database - maintain objects for each user who has made a request:
 	- Add new user 
 	- Delete existing user
