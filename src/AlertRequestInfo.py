@@ -1,4 +1,3 @@
-from validateEmail import *
 
 class AlertRequestInfo:
     def __init__(self, email, campsite, dates):
