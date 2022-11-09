@@ -11,5 +11,3 @@ def validateEmail(emailReceived):
     except EmailNotValidError as error:
         print(str(error))
     
-
-
