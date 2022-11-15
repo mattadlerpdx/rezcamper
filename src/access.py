@@ -4,7 +4,6 @@ import json
 
 api_key = os.environ["NP_API_KEY"]
 # Configure API request
-endpoint = "https://developer.nps.gov/api/v1/parks?stateCode=me"
 pass_key = f'https://developer.nps.gov/api/v1/campgrounds?parkCode=or&api_key={api_key}'
 
 response = urllib.request.urlopen(pass_key).read()
