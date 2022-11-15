@@ -30,6 +30,8 @@ data = json.loads(response.decode('utf-8'))
 #print(data['total'])
 #print(data['limit'])
 #print(data['start'])
+count = 0
 with open('data_output.json', 'w') as fp:
     for line in data['data']:
-        fp.write(json.dumps(line))
+        fp.write(json.dumps(line) + '\n')
+        print(line)
