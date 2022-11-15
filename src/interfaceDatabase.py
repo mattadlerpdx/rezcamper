@@ -1,7 +1,5 @@
 import abc
 import json
-
-
 class InterfaceDatabase(abc):
     @abc.abstractclassmethod
     def get(self):
@@ -18,44 +16,38 @@ class InterfaceDatabase(abc):
     @abc.abstractclassmethod
     def delete(self):
         pass
-
-
+    
 class InterfaceJson(InterfaceDatabase):
     def get(self):
         f = open('data.json')
         data = json.load(f)
-        for i in data['Campsites']:
-            print(data)
-        f.close()
+        for i in data:
+            print(i)
+            f.close()
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open('data.json')
         data = json.load(f)
-        data['email'] = emailToInsert
-        data['campsite'] = campsiteToInsert
-        data['date'] = dateToInsert
+        toAppend = {'email': emailToInsert,
+                'campsite': campsiteToInsert, 'date': dateToInsert}
+        data.append(toAppend)
+        outFile = open("data.json", "w")
+        json.dump(data, outFile)
     
-    def post(self, emailToPost, campsiteToPost, dateToPost):
-       newPost = {"email": emailToPost,
-                  "campsite": campsiteToPost, "date": dateToPost}
-       jsonString = json.dumps(newPost)
-       jsonFile = open("newJsonFile.json", "w")
-       jsonFile.write(jsonString)
-       jsonFile.close()
-       
-
     def delete(self, emailToFind):
         f = open('data.json')
         data = json.load(f)
-        if (data['email'] == emailToFind):
-            data['email'] = None
-            data['campsite'] = None
-            data['date'] = None
+        for i, obj in enumerate(data):
+            if (obj["email"] == emailToFind):
+                listobj.pop(i)
+        outFile = open("updated.json", "w")
+        json.dump(listobj, outFile)
 
     def findCampsite(self, campsiteToFind):
         f = open('data.json')
         data = json.load(f)
-        if (data['campsite'] == campsiteToFind):
-            return True
-        else:
-            return False
+        for i, obj in enumerate(data):
+            if (obj["campsite"] == campsiteToFind):
+                return True
+            else:
+                return False
