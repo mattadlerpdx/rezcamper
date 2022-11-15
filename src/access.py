@@ -21,8 +21,8 @@ import urllib.request, json
 # Configure API request
 endpoint = "https://developer.nps.gov/api/v1/parks?stateCode=me"
 api_key = os.environ.get('NP_API_KEY')
-pass_key = 'https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=fqVm0mEF5FCSuXrgskibHGKmretdviKbvQNMdmNG'
-HEADERS = {"Authorization":"fqVm0mEF5FCSuXrgskibHGKmretdviKbvQNMdmNG"}
+pass_key = f'https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key={api_key}'
+HEADERS = {"Authorization":f"{api_key}"}
 req = urllib.request.Request(endpoint,headers=HEADERS)
 # Additional code would follow
 
