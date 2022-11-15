@@ -33,8 +33,4 @@ data = json.loads(response.decode('utf-8'))
 #print(data['start'])
 with open('data_output.json', 'w') as fp:
     for line in data['data']:
-        fp.write(str(line))
-#for k in data:
-#    data[k]
-# Prepare and execute output
-#print(data["data"][0]["fullName"] + " can be found at " + data["data"][0]["latLong"] + ".")
+        fp.write(json.dumps(line))
