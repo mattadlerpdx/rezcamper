@@ -1,1 +1,10 @@
-[{"date": "2023-12-13", "campsite": "Yellowstone", "email": "matt@gmail.com"}, {"date": "yo", "campsite": "there", "email": "hey"}, {"date": "f", "campsite": "t", "email": "hi"}]
+[
+  {
+    "date": "2023-12-13",
+    "campsite": "Yellowstone",
+    "email": "matt@gmail.com"
+  },
+  { "date": "yo", "campsite": "there", "email": "hey" },
+  { "date": "f", "campsite": "t", "email": "hi" },
+  { "email": "test@gmail.com", "campsite": "Olympia", "date": "2023-05-21" }
+]

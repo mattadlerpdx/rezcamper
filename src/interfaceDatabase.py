@@ -1,12 +1,9 @@
 import abc
 import json
-class InterfaceDatabase(abc):
-    @abc.abstractclassmethod
+from abc import ABC, abstractmethod
+class InterfaceDatabase(ABC):
+    @abstractmethod
     def get(self):
-        pass
-
-    @abc.abstractclassmethod
-    def put(self):
         pass
 
     @abc.abstractclassmethod
@@ -25,7 +22,7 @@ class InterfaceJson(InterfaceDatabase):
             print(i)
             f.close()
 
-    def put(self, emailToInsert, campsiteToInsert, dateToInsert):
+    def post(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open('data.json')
         data = json.load(f)
         toAppend = {'email': emailToInsert,
@@ -35,19 +32,32 @@ class InterfaceJson(InterfaceDatabase):
         json.dump(data, outFile)
     
     def delete(self, emailToFind):
+    #this function deletes json obj from array of json objs
         f = open('data.json')
         data = json.load(f)
         for i, obj in enumerate(data):
             if (obj["email"] == emailToFind):
-                listobj.pop(i)
+                data.pop(i)
         outFile = open("updated.json", "w")
-        json.dump(listobj, outFile)
+        json.dump(data, outFile)
 
     def findCampsite(self, campsiteToFind):
         f = open('data.json')
         data = json.load(f)
-        for i, obj in enumerate(data):
-            if (obj["campsite"] == campsiteToFind):
-                return True
+        for i in data:
+            if(i["campsite"] == campsiteToFind):
+                print(i)
             else:
-                return False
+                f.close()
+
+           
+            
+            
+       
+
+#InterfaceJson().get()
+#InterfaceJson().post('test@gmail.com','Olympia','2023-05-21')
+#InterfaceJson().get()
+#InterfaceJson().delete('test@gmail.com')
+#InterfaceJson().get()
+#print(InterfaceJson().findCampsite('Olympia'))
