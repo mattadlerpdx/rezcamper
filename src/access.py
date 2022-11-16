@@ -1,7 +1,6 @@
 import os
 import urllib.request
 import json
-from pathlib import Path
 from api_lists import API_METHODS
 
 def collectParkData():
