@@ -1,10 +1,6 @@
 import abc
 import json
-class InterfaceDatabase(abc):
-    @abc.abstractclassmethod
-    def get(self):
-        pass
-
+class InterfaceToFile(abc):
     @abc.abstractclassmethod
     def put(self):
         pass
@@ -16,14 +12,22 @@ class InterfaceDatabase(abc):
     @abc.abstractclassmethod
     def delete(self):
         pass
-    
-class InterfaceJson(InterfaceDatabase):
+
+class InterfaceFromFile(abc):
+    @abc.abstractclassmethod
+    def get(self):
+        pass
+
+  
+class InterfaceJson(InterfaceToFile):
     def get(self):
         f = open('data.json')
         data = json.load(f)
         for i in data:
             print(i)
             f.close()
+
+class InterfaceJson(InterfaceFromFile):
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open('data.json')
