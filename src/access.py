@@ -2,7 +2,7 @@ import os
 import urllib.request
 import json
 from pathlib import Path
-from api_lists import JSON_KEYS, API_METHODS
+from api_lists import API_METHODS
 
 api_key = os.environ["NP_API_KEY"]
 
