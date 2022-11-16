@@ -11,14 +11,14 @@ def formatMethod(method) -> str:
     return name
 
 def collectParkData():
-    '''
+    """
         Function: Collects park data
         Uses a data structure from api_lists.py
         and iterates through API Call
         to make api request using. 
         These API Call Names are used 
         to label the JSON File Output
-    '''
+    """
     api_key = os.environ["NP_API_KEY"]
 
     for method in API_METHODS:
