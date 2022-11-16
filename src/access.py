@@ -11,6 +11,10 @@ for method in API_METHODS:
     pass_key = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
     response = urllib.request.urlopen(pass_key).read()
     data = json.loads(response.decode('utf-8'))
-    with open(f'../json_files/{method}_data.json','w') as fp:
+    if '/' in method:
+        name = method.replace('/','-')
+    else:
+        name = method
+    with open(f'../json_files/{name}_data.json','w') as fp:
         for line in data['data']:
             fp.write(json.dumps(line) + '\n')
