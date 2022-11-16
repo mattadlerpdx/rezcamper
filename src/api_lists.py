@@ -24,3 +24,7 @@ API_METHODS = [
     'visitorcenters',
     'webcams',
 ]
+
+STATE_CODES = [
+    
+]

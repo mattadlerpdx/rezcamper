@@ -30,7 +30,6 @@ def collectParkData():
         with open(f'../json_files/{name}_data.json','w') as fp:
             for line in data['data']:
                 fp.write(json.dumps(line) + '\n')
-'''
+
 if __name__ == "__main__" :
     collectParkData()
-'''
