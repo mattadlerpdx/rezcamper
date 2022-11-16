@@ -1,10 +1,3 @@
-JSON_KEYS = [
-    'total',
-    'limit',
-    'start',
-    'data',
-]
-
 API_METHODS = [
     'activities',
     'activities/parks',
