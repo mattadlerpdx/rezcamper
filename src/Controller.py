@@ -19,21 +19,24 @@ class Controller:
     def getPostAsInput(self):
         post = {}
         post["email"] = input("Enter email: ")
-        post["Campsite"] = input("Enter campsite name: ")
-        post["Date"] = input ("Enter date: ")
+        post["campsite"] = input("Enter campsite name: ")
+        post["date"] = input ("Enter date: ")
         return post
 
     def validatePost(self, post):
+        validPost = {}
         try:
-            email = validateEmail(post["email"])
-            campsite = validateCampsiteName(post["campsite"])
-            date = validateDate(post["date"])
+            validPost["email"] = validateEmail(post["email"])
+            validPost["campsite"] = validateCampsiteName(post["campsite"])
+            if validateDate(post["date"]):
+                validPost["date"] = post["date"]
         except ValueError:
             print("The post is not valid")
-        return AlertRequest(email, campsite, date)
+        return validPost
 
     def updateEmail(self, post):
         alertRequest = self.validatePost(post)
+        print(alertRequest)
         self.interface.addEmail(alertRequest)
 
 

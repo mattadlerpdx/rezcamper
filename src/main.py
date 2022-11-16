@@ -3,14 +3,13 @@ from Controller import *
 from JsonModel import *
 
 def main():
-    campsiteDataFile = "data.json"
-    toFile = InterfaceToFile()
+    campsiteDataFile = "src/campsitesToMonitor.json"
+    #toFile = InterfaceToFile()
     model = JsonModel(campsiteDataFile)
-    controller = Controller(toFile)
+    controller = Controller(model)
 
     mockPost = controller.getPostAsInput()
-    validPost = controller.validatePost(mockPost)
-    controller.updateEmail(validPost)
+    controller.updateEmail(mockPost)
 
 
 if __name__ == "__main__":

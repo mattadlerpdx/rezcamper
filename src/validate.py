@@ -28,4 +28,5 @@ def validateDate(input):
         return input == datetime.strptime(input, "%Y-%m-%d").strftime('%Y-%m-%d')
 
 def validateCampsiteName(campsite):
-    pass
+    #will rebuild later
+    return campsite

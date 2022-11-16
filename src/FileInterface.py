@@ -16,9 +16,10 @@ class InterfaceToFile(ABC):
 
     @abc.abstractclassmethod
     def addEmail(self, alertRequest):
+        print("inside interface")
         pass
 
-class InterfaceFromFile(abc):
+class InterfaceFromFile(ABC):
     @abc.abstractclassmethod
     def get(self):
         pass
