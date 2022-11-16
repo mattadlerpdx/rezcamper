@@ -2,7 +2,7 @@
 # https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple
 
 from validate import *
-from interfaceDatabase import *
+from FileInterface import *
 import json
 
 class AlertRequest:
@@ -13,8 +13,15 @@ class AlertRequest:
 
 
 class Controller:
-    def __init__(self):
-        self.toJson = InterfaceToJson()
+    def __init__(self, interface):
+        self.interface = interface
+
+    def getPostAsInput(self):
+        post = {}
+        post["email"] = input("Enter email: ")
+        post["Campsite"] = input("Enter campsite name: ")
+        post["Date"] = input ("Enter date: ")
+        return post
 
     def validatePost(self, post):
         try:
@@ -25,26 +32,9 @@ class Controller:
             print("The post is not valid")
         return AlertRequest(email, campsite, date)
 
-    def getPosts(jsonFile):
-        return json.loads(jsonFile)
-
-    def updatetModelWithPost(self, post):
-        
+    def updateEmail(self, post):
         alertRequest = self.validatePost(post)
-        self.toJson.addEmail(alertRequest)
+        self.interface.addEmail(alertRequest)
 
 
 
-
-#Run and test in file
-def main():
-    mock = Controller()
-    mockPosts = "../externalFiles/posts.json"
-    posts = mock.getPosts(mockPosts)
-    alerts = []
-    for i in posts:
-        alerts.append(mock.validatePost(posts[i]))
-
-
-if __name__ == "__main__":
-    main()

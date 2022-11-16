@@ -1,7 +1,8 @@
 import abc
 import json
-class InterfaceToFile(abc):
-    @abc.abstractclassmethod
+from abc import ABC, abstractmethod
+class InterfaceToFile(ABC):
+    @abstractmethod
     def put(self):
         pass
 
