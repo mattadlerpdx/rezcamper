@@ -7,7 +7,6 @@ def main():
     #toFile = InterfaceToFile()
     model = JsonModel(campsiteDataFile)
     controller = Controller(model)
-
     mockPost = controller.getPostAsInput()
     controller.updateEmail(mockPost)
 
