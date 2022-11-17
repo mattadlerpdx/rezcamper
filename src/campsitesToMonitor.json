@@ -1,0 +1,11 @@
+[
+  {
+    "date": "2023-12-13",
+    "campsite": "Yellowstone",
+    "email": ["matt@gmail.com"],
+    "availability": "open"
+  },
+  { "date": "yo", "campsite": "there", "email": ["hey"] },
+  { "date": "f", "campsite": "t", "email": ["hi"] },
+  { "email": ["test@gmail.com"], "campsite": "Olympia", "date": "2023-05-21" }
+]
