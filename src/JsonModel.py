@@ -23,24 +23,37 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             return True
 
     def addEmail(self, alertRequest):
-        #with open(self.file, 'a') as fp:
         f = open(self.file)
         data = json.load(f)
         f.close()
-        print(data)
         location = self.findCampsite(alertRequest["campsite"], data)
-        try:
-            print("Placeholder for the addEmail function")
-            #if self.validateLocation(location):
+        if self.validateLocation(location):
             data[location]["email"].append(alertRequest["email"])
             f = open(self.file, 'w')
             json.dump(data, f)
             f.close()
-            print(data) #test to see the data is being updated
-        except ValueError:
-            print("Campsite requested not available in this system to monitor.")
+        else:
+            raise ValueError("Campsite requested not available in this system to monitor.")
 
-   
+    def retrieveEmails(self, campsite, data):
+        location = self.findCampsite(campsite, data)
+        try:
+            self.validateLocation(location)
+            emails = data[location]["email"]
+            return emails
+        except ValueError:
+            print("Campsite requested not found")
+
+    def retrieveAllEmails(self):
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
+        allEmails = []
+        for i in data:
+            if(i["availability"] == "open"):
+                allEmails += self.retrieveEmails(i["campsite"], data)
+        return allEmails
+    
 
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
@@ -51,7 +64,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         data.append(toAppend)
         outFile = open("data.json", "w")
         json.dump(data, outFile)
-       
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
@@ -63,7 +75,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         outFile = open("data.json", "w")
         json.dump(data, outFile)
      
-    
     def delete(self, emailToFind):
         f = open(self.file)
         data = json.load(f)
@@ -74,7 +85,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         outFile = open("updated.json", "w")
         json.dump(data, outFile)
      
-
     def get(self):
         f = open(self.file)
         data = json.load(f)
