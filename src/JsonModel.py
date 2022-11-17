@@ -1,10 +1,11 @@
 
 from FileInterface import *
+import json
 
 
 class JsonModel(InterfaceToFile, InterfaceFromFile):
     def __init__(self, filename):
-        self.file = filename
+        self.file = "src/campsitesToMonitor.json"
 
     def loadFile(self):
         f = open(self.file)
@@ -29,21 +30,18 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
     def addEmail(self, alertRequest):
         #with open(self.file, 'a') as fp:
-        f = open(self.file)
+        f = open(self.file, 'r')
         data = json.load(f)
-            #location is the index in the list of CAMPSITE json objects in our data.json file
+        f.close()
         location = self.findCampsite(alertRequest["campsite"])
         try:
             print("Placeholder for the addEmail function")
-
-                #if self.validateLocation(location):
-                    
+            #if self.validateLocation(location):
             data[location]["email"].append(alertRequest["email"])
-
-                #data = self.loadFile()
-                #Now we need to get to the "email" key at the campsite at index i, and change it to alertRequest.email
-                #add the email to the JSON object at location in data
-            print(data)
+            f = open(self.file, 'w')
+            json.dump(data, f)
+            f.close()
+            print(data) #test to see the data is being updated
         except ValueError:
             print("Campsite requested not available in this system to monitor.")
 
