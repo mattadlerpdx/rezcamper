@@ -9,6 +9,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def loadFile(self):
         f = open(self.file)
         return json.load(f)
+        f.close()
 
     def findCampsite(self, campsiteToFind):
         data = self.loadFile()
