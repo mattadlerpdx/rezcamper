@@ -5,21 +5,15 @@ import json
 
 class JsonModel(InterfaceToFile, InterfaceFromFile):
     def __init__(self, filename):
-        self.file = "src/campsitesToMonitor.json"
+        self.file = filename
 
-    def loadFile(self):
-        f = open(self.file)
-        return json.load(f)
-        
-
-    def findCampsite(self, campsiteToFind):
-        data = self.loadFile()
+    def findCampsite(self, campsiteToFind, data):
         location = -1
-        count = 0
+        index = 0
         for i in data:
             if (i["campsite"] == campsiteToFind):
-                location = count
-            count += 1
+                location = index
+            index += 1
         return location
 
     def validateLocation(self, location):
@@ -30,10 +24,11 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
     def addEmail(self, alertRequest):
         #with open(self.file, 'a') as fp:
-        f = open(self.file, 'r')
+        f = open(self.file)
         data = json.load(f)
         f.close()
-        location = self.findCampsite(alertRequest["campsite"])
+        print(data)
+        location = self.findCampsite(alertRequest["campsite"], data)
         try:
             print("Placeholder for the addEmail function")
             #if self.validateLocation(location):
@@ -48,7 +43,9 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
    
 
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
-        data = self.loadFile()
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
         toAppend = {'email': emailToInsert,
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
@@ -57,7 +54,9 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
        
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
-        data = self.loadFile()
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
         toAppend = {'email': emailToInsert,
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
@@ -66,7 +65,9 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
      
     
     def delete(self, emailToFind):
-        data = self.loadFile()
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
         for i, obj in enumerate(data):
             if (obj["email"] == emailToFind):
                 data.pop(i)
@@ -75,7 +76,9 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
      
 
     def get(self):
-        data = self.loadFile()
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
         for i in data:
             print(i)
    

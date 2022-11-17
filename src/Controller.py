@@ -36,7 +36,6 @@ class Controller:
 
     def updateEmail(self, post):
         alertRequest = self.validatePost(post)
-        print(alertRequest)
         self.interface.addEmail(alertRequest)
 
 
