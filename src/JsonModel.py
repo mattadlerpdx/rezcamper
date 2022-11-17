@@ -9,7 +9,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def loadFile(self):
         f = open(self.file)
         return json.load(f)
-        f.close()
+        
 
     def findCampsite(self, campsiteToFind):
         data = self.loadFile()
@@ -19,7 +19,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             if (i["campsite"] == campsiteToFind):
                 location = count
             count += 1
-        self.file.close()
         return location
 
     def validateLocation(self, location):
@@ -29,20 +28,26 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             return True
 
     def addEmail(self, alertRequest):
-        #location is the index in the list of CAMPSITE json objects in our data.json file
+        #with open(self.file, 'a') as fp:
+        f = open(self.file)
+        data = json.load(f)
+            #location is the index in the list of CAMPSITE json objects in our data.json file
         location = self.findCampsite(alertRequest["campsite"])
         try:
             print("Placeholder for the addEmail function")
 
-            print(self.validateLocation(location))
-            #data = self.loadFile()
-            #Now we need to get to the "email" key at the campsite at index i, and change it to alertRequest.email
-            #add the email to the JSON object at location in data
+                #if self.validateLocation(location):
+                    
+            data[location]["email"].append(alertRequest["email"])
 
+                #data = self.loadFile()
+                #Now we need to get to the "email" key at the campsite at index i, and change it to alertRequest.email
+                #add the email to the JSON object at location in data
+            print(data)
         except ValueError:
             print("Campsite requested not available in this system to monitor.")
 
-        self.file.close()
+   
 
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
         data = self.loadFile()
@@ -51,7 +56,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         data.append(toAppend)
         outFile = open("data.json", "w")
         json.dump(data, outFile)
-        self.file.close()
+       
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         data = self.loadFile()
@@ -60,7 +65,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         data.append(toAppend)
         outFile = open("data.json", "w")
         json.dump(data, outFile)
-        self.file.close()
+     
     
     def delete(self, emailToFind):
         data = self.loadFile()
@@ -69,13 +74,13 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
                 data.pop(i)
         outFile = open("updated.json", "w")
         json.dump(data, outFile)
-         self.file.close()
+     
 
     def get(self):
         data = self.loadFile()
         for i in data:
             print(i)
-        self.file.close()
+   
 
 
 #JsonModel().get()
