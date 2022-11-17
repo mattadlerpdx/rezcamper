@@ -19,6 +19,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             if (i["campsite"] == campsiteToFind):
                 location = count
             count += 1
+        self.file.close()
         return location
 
     def validateLocation(self, location):
@@ -41,14 +42,16 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         except ValueError:
             print("Campsite requested not available in this system to monitor.")
 
+        self.file.close()
+
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
-        f = open('data.json')
-        data = json.load(f)
+        data = self.loadFile()
         toAppend = {'email': emailToInsert,
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
         outFile = open("data.json", "w")
         json.dump(data, outFile)
+        self.file.close()
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         data = self.loadFile()
@@ -57,6 +60,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         data.append(toAppend)
         outFile = open("data.json", "w")
         json.dump(data, outFile)
+        self.file.close()
     
     def delete(self, emailToFind):
         data = self.loadFile()
@@ -65,13 +69,13 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
                 data.pop(i)
         outFile = open("updated.json", "w")
         json.dump(data, outFile)
+         self.file.close()
 
     def get(self):
-        f = open('data.json')
-        data = json.load(f)
+        data = self.loadFile()
         for i in data:
             print(i)
-            f.close()
+        self.file.close()
 
 
 #JsonModel().get()
