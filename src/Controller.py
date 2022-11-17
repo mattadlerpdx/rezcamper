@@ -3,13 +3,6 @@
 
 from validate import *
 from FileInterface import *
-import json
-
-class AlertRequest:
-    def __init__(self, email, campsite, date):
-        self.email = email
-        self.campsite = campsite
-        self.date = date
 
 
 class Controller:
@@ -30,14 +23,22 @@ class Controller:
             validPost["campsite"] = validateCampsiteName(post["campsite"])
             if validateDate(post["date"]):
                 validPost["date"] = post["date"]
+            return validPost
         except ValueError:
             print("The post is not valid")
-        return validPost
-
+        except EmailNotValidError:
+            print("The post is not valid")
+        
     def updateEmail(self, post):
-        alertRequest = self.validatePost(post)
-        print(alertRequest)
-        self.interface.addEmail(alertRequest)
+        try:
+            alertRequest = self.validatePost(post)
+            self.interface.addEmail(alertRequest)
+            print(f'Your request has been processed. {post["email"]} will recieve an alert if {post["campsite"]} becomes available')
+        except ValueError:
+            print("Could not create alert request")
+
+    def getEmailsForAlerts(self):
+        return self.interface.retrieveAllEmails()
 
 
 

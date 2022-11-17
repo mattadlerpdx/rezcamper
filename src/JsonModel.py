@@ -1,24 +1,19 @@
 
 from FileInterface import *
+import json
 
 
 class JsonModel(InterfaceToFile, InterfaceFromFile):
     def __init__(self, filename):
         self.file = filename
 
-    def loadFile(self):
-        f = open(self.file)
-        return json.load(f)
-        f.close()
-
-    def findCampsite(self, campsiteToFind):
-        data = self.loadFile()
+    def findCampsite(self, campsiteToFind, data):
         location = -1
-        count = 0
+        index = 0
         for i in data:
             if (i["campsite"] == campsiteToFind):
-                location = count
-            count += 1
+                location = index
+            index += 1
         return location
 
     def validateLocation(self, location):
@@ -28,22 +23,42 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             return True
 
     def addEmail(self, alertRequest):
-        #location is the index in the list of CAMPSITE json objects in our data.json file
-        location = self.findCampsite(alertRequest["campsite"])
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
+        location = self.findCampsite(alertRequest["campsite"], data)
+        if self.validateLocation(location):
+            data[location]["email"].append(alertRequest["email"])
+            f = open(self.file, 'w')
+            json.dump(data, f)
+            f.close()
+        else:
+            raise ValueError("Campsite requested not available in this system to monitor.")
+
+    def retrieveEmails(self, campsite, data):
+        location = self.findCampsite(campsite, data)
         try:
-            print("Placeholder for the addEmail function")
-
-            print(self.validateLocation(location))
-            #data = self.loadFile()
-            #Now we need to get to the "email" key at the campsite at index i, and change it to alertRequest.email
-            #add the email to the JSON object at location in data
-
+            self.validateLocation(location)
+            emails = data[location]["email"]
+            return emails
         except ValueError:
-            print("Campsite requested not available in this system to monitor.")
+            print("Campsite requested not found")
+
+    def retrieveAllEmails(self):
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
+        allEmails = []
+        for i in data:
+            if(i["availability"] == "open"):
+                allEmails += self.retrieveEmails(i["campsite"], data)
+        return allEmails
+    
 
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
-        f = open('data.json')
+        f = open(self.file)
         data = json.load(f)
+        f.close()
         toAppend = {'email': emailToInsert,
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
@@ -51,27 +66,32 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         json.dump(data, outFile)
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
-        data = self.loadFile()
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
         toAppend = {'email': emailToInsert,
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
         outFile = open("data.json", "w")
         json.dump(data, outFile)
-    
+     
     def delete(self, emailToFind):
-        data = self.loadFile()
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
         for i, obj in enumerate(data):
             if (obj["email"] == emailToFind):
                 data.pop(i)
         outFile = open("updated.json", "w")
         json.dump(data, outFile)
-
+     
     def get(self):
-        f = open('data.json')
+        f = open(self.file)
         data = json.load(f)
+        f.close()
         for i in data:
             print(i)
-            f.close()
+   
 
 
 #JsonModel().get()
