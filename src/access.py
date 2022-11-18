@@ -8,7 +8,8 @@ from api_lists import API_METHODS as ParkFeatures
 def formatMethod(method) -> str:
     if '/' in method:
         name = method.replace('/','-')
-    return name
+        return name
+    return method
 
 class NPSParkData:
     def __init__(self, key):
