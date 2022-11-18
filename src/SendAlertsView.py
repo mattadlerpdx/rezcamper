@@ -1,11 +1,16 @@
 
+from FileInterface import *
 
+class SendAlertsView():
+    def __init__(self, interface: InterfaceFromFile):
+        self.interface = interface
+        self.alerts = []
 
-class SendAlertsView:
-    def __init__(self,emails):
-        self.emails = emails
+    def getAlerts(self):
+        self.alerts = self.interface.retrieveAlerts()
 
     def displayEmails(self):
-        print(f'These emails should receive an alert that their campsites are available: {self.emails}')
+        self.getAlerts()
+        print(f'These emails should receive an alert that their campsites are available: {self.alerts}')
 
 

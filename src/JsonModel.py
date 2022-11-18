@@ -11,7 +11,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         f = open(self.file, 'r')
         data = json.load(f)
         f.close()
-        print(data)
         return data
 
     def dumpToFile(self, data):
@@ -46,22 +45,37 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             print("Could not add this request to the file.")
 
 
-    #Need to update these when we solidify json formatting
-    def getCampsiteEmails(self, campsite, data):
+    #bug: for some reason allEmails is storing individual characters...
+    def retrieveAlerts(self):
+        data = self.loadFromFile()
+        allEmails = []
+        for campsite in data:
+            allEmails += self.getCampsiteEmails(campsite)
+        return allEmails
+
+     #does this method do too many things?
+    def getCampsiteEmails(self, campsite):
+        emails = []
         try:
-            location = self.findCampsite(campsite, data)
-            emails = data[location]["requests"]["email"]
+            for request in campsite["requests"]:
+                requestDate = request["date"]
+                if(self.requestMatchesOpen(str(requestDate), campsite)):
+                    emails += request["email"]
             return emails
         except ValueError:
             print("Campsite requested not found")
 
-    def retrieveAllEmails(self):
-        data = self.loadFromFile()
-        allEmails = []
-        for i in data:
-            if(i["availability"] == "open"):
-                allEmails += self.getCampsiteEmails(i["campsite"], data)
-        return allEmails
+    
+    def requestMatchesOpen(self, requestDate, campsite):
+        match = False
+        if campsite["dates"][requestDate] == "open":
+            match = True
+        return match
+
+
+
+
+
     
     #Update these below to post and put for an entire Campsite object
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):

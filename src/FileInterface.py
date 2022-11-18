@@ -23,6 +23,6 @@ class InterfaceFromFile(ABC):
     def get(self):
         pass
 
-    def retrieveEmails(self, campsite):
+    def retrieveAlerts(self):
         pass
 

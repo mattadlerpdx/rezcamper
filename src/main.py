@@ -17,8 +17,7 @@ def main():
             mockPost = controller.getPostAsInput()
             controller.sendRequestToModel(mockPost)
         elif selection == 2:
-            emails = controller.getEmailsForAlerts()
-            sendAlerts = SendAlertsView(emails)
+            sendAlerts = SendAlertsView(model)
             sendAlerts.displayEmails()
         elif selection == 0:
             makeSelection = False

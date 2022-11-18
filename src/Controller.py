@@ -38,8 +38,7 @@ class Controller:
         except ValueError:
             print("Could not create alert request, no request processed")
 
-    def getEmailsForAlerts(self):
-        return self.interface.retrieveAllEmails()
+ 
 
 
 
