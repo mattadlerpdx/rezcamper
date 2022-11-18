@@ -7,6 +7,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def __init__(self, filename):
         self.file = filename
 
+#### UTILITY FUNCTIONS ####
     def loadFromFile(self):
         f = open(self.file, 'r')
         data = json.load(f)
@@ -29,6 +30,18 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             raise ValueError ("Campsite requested not available in this system to monitor.")
         return location
 
+    def delete(self, emailToFind):
+        f = open(self.file)
+        data = json.load(f)
+        f.close()
+        for i, obj in enumerate(data):
+            if (obj["email"] == emailToFind):
+                data.pop(i)
+        outFile = open("updated.json", "w")
+        json.dump(data, outFile)
+
+### REQUEST PROCESSING #####
+
     def appendRequest(self, alertRequest, location, data):
         data[location]["requests"].append(alertRequest)
         self.dumpToFile(data)
@@ -44,6 +57,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         except ValueError:
             print("Could not add this request to the file.")
 
+### ALERT PROCESSING ####
 
     #bug: for some reason allEmails is storing individual characters...
     def retrieveAlerts(self):
@@ -64,7 +78,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             return emails
         except ValueError:
             print("Campsite requested not found")
-
     
     def requestMatchesOpen(self, requestDate, campsite):
         match = False
@@ -75,7 +88,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 
 
-
+### WORKING WITH THE WEBSCRAPING DATA #####
     
     #Update these below to post and put for an entire Campsite object
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
@@ -98,15 +111,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         outFile = open("data.json", "w")
         json.dump(data, outFile)
      
-    def delete(self, emailToFind):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        for i, obj in enumerate(data):
-            if (obj["email"] == emailToFind):
-                data.pop(i)
-        outFile = open("updated.json", "w")
-        json.dump(data, outFile)
+
      
     def get(self):
         f = open(self.file)
