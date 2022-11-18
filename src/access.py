@@ -1,7 +1,8 @@
 import os
+import sys
 import urllib.request
 import json
-from api_lists import API_METHODS
+from api_lists import API_METHODS as ParkFeatures
 
 def formatMethod(method) -> str:
     if '/' in method:
@@ -10,7 +11,7 @@ def formatMethod(method) -> str:
         name = method
     return name
 
-class NPSParkData():
+class NPSParkData:
     def __init__(self, key):
         self.key = key
 
@@ -23,9 +24,7 @@ class NPSParkData():
             These API Call Names are used 
             to label the JSON File Output
         """
-        api_key = os.environ["NP_API_KEY"]
-
-        for method in API_METHODS:
+        for method in ParkFeatures:
             # Configure API request
             end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
             response = urllib.request.urlopen(end_point).read()
@@ -34,6 +33,10 @@ class NPSParkData():
             with open(f'../json_files/{name}_data.json','w') as fp:
                 for line in data['data']:
                     fp.write(json.dumps(line) + '\n')
+    
+        
 
-    if __name__ == "__main__" :
-        collectParkData()
+if __name__ == "__main__" :
+    API = os.environ["NP_API_KEY"]
+    NPSData = NPSParkData(API)
+    NPSData.collectParkData()
