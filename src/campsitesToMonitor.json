@@ -1,1 +1,39 @@
-[{"date": "2023-12-13", "campsite": "Yellowstone", "email": ["matt@gmail.com", "hello@myemail.com", "banana@gmail.com", "hello@valid.com"], "availability": "open"}, {"date": "yo", "campsite": "there", "email": ["itsopen@gmail.com", "some@gmail.com", "tryagain@ok.com"], "availability": "open"}, {"date": "f", "campsite": "t", "email": ["hi@nope.com"], "availability": "closed"}, {"email": ["nope@gmail.com"], "campsite": "Olympia", "date": "2023-05-21", "availability": "closed"}]
+[
+    {
+        "availability":"open",
+        "campsite":"Yellowstone",
+        "date":"2023-12-13",
+        "email":[
+            "matt@gmail.com",
+            "hello@myemail.com",
+            "banana@gmail.com",
+            "hello@today.com",
+            "kira@ok.com",
+            "matt@today.com"
+        ]
+    },
+    {
+        "availability":"open",
+        "campsite":"there",
+        "date":"yo",
+        "email":[
+            "itsopen@gmail.com"
+        ]
+    },
+    {
+        "availability":"closed",
+        "campsite":"t",
+        "date":"f",
+        "email":[
+            "hi@nope.com"
+        ]
+    },
+    {
+        "availability":"closed",
+        "campsite":"Olympia",
+        "date":"2023-05-21",
+        "email":[
+            "nope@gmail.com"
+        ]
+    }
+]

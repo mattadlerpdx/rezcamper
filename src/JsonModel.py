@@ -30,7 +30,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         if self.validateLocation(location):
             data[location]["email"].append(alertRequest["email"])
             f = open(self.file, 'w')
-            json.dump(data, f)
+            json.dump(data, f, indent=4, separators=(',',':'), sort_keys=True)
             f.close()
         else:
             raise ValueError("Campsite requested not available in this system to monitor.")
@@ -63,7 +63,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
         outFile = open("data.json", "w")
-        json.dump(data, outFile)
+        json.dump(data, outFile, indent=2)
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
