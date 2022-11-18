@@ -2,38 +2,44 @@
     {
         "availability":"open",
         "campsite":"Yellowstone",
-        "date":"2023-12-13",
-        "email":[
-            "matt@gmail.com",
-            "hello@myemail.com",
-            "banana@gmail.com",
-            "hello@today.com",
-            "kira@ok.com",
-            "matt@today.com"
+        "dates":[
+            {
+                "2023-12-13":"open"
+            },
+            {
+                "2023-12-14":"open"
+            }
+        ],
+        "requests":[
+            {
+                "campsite":"Yellowstone",
+                "date":"2022-03-03",
+                "email":"banana@gmail.com"
+            }
         ]
     },
     {
-        "availability":"open",
-        "campsite":"there",
-        "date":"yo",
-        "email":[
-            "itsopen@gmail.com"
-        ]
-    },
-    {
-        "availability":"closed",
-        "campsite":"t",
-        "date":"f",
-        "email":[
-            "hi@nope.com"
-        ]
-    },
-    {
-        "availability":"closed",
-        "campsite":"Olympia",
-        "date":"2023-05-21",
-        "email":[
-            "nope@gmail.com"
+        "availability": "closed",
+        "campsite":"LostCreek",
+        "dates":[
+            {
+                "2023-12-13":"closed"
+            },
+            {
+                "2023-12-14":"closed"
+            }
+        ],
+        "requests":[
+            {
+                "campsite":"Yellowstone",
+                "date":"2022-03-03",
+                "email":"banana@gmail.com"
+            },
+            {
+                "campsite":"LostCreek",
+                "date":"2023-12-13",
+                "email":"apple@gmail.com"
+            }
         ]
     }
 ]

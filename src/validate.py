@@ -27,6 +27,11 @@ def validateDate(input):
     else:
         return input == datetime.strptime(input, "%Y-%m-%d").strftime('%Y-%m-%d')
 
-def validateCampsiteName(campsite):
-    #will rebuild later
-    return campsite
+def validateCampsiteName(name):
+    if type(name) is not str:
+        raise TypeError("Campsite name requested is in the wrong format, string expected")
+    if(name.isspace()):
+        raise TypeError("Campsite nae requested must not be blank")
+    if(name.isnumeric()):
+        raise TypeError("Campsite name requested can not be all numbers")
+    return name

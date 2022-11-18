@@ -7,6 +7,18 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def __init__(self, filename):
         self.file = filename
 
+    def loadFromFile(self):
+        f = open(self.file, 'r')
+        data = json.load(f)
+        f.close()
+        print(data)
+        return data
+
+    def dumpToFile(self, data):
+        f = open(self.file, 'w')
+        json.dump(data, f, indent=4, separators=(',',':'), sort_keys=True)
+        f.close()
+
     def findCampsite(self, campsiteToFind, data):
         location = -1
         index = 0
@@ -14,47 +26,44 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             if (i["campsite"] == campsiteToFind):
                 location = index
             index += 1
+        if(location < 0):
+            raise ValueError ("Campsite requested not available in this system to monitor.")
         return location
 
-    def validateLocation(self, location):
-        if location < 0:
-            raise ValueError("No valid location in JSON file for requested campsite name.")
-        else:
-            return True
+    def appendRequest(self, alertRequest, location, data):
+        data[location]["requests"].append(alertRequest)
+        self.dumpToFile(data)
 
-    def addEmail(self, alertRequest):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        location = self.findCampsite(alertRequest["campsite"], data)
-        if self.validateLocation(location):
-            data[location]["email"].append(alertRequest["email"])
-            f = open(self.file, 'w')
-            json.dump(data, f, indent=4, separators=(',',':'), sort_keys=True)
-            f.close()
-        else:
-            raise ValueError("Campsite requested not available in this system to monitor.")
-
-    def retrieveEmails(self, campsite, data):
-        location = self.findCampsite(campsite, data)
+    def addRequest(self, alertRequest):
+        data = self.loadFromFile()
+        print(data)
+        print(alertRequest)
         try:
-            self.validateLocation(location)
-            emails = data[location]["email"]
+            index = self.findCampsite(alertRequest["campsite"], data)
+            self.appendRequest(alertRequest, index, data)
+            return True
+        except ValueError:
+            print("Could not add this request to the file.")
+
+
+    #Need to update these when we solidify json formatting
+    def getCampsiteEmails(self, campsite, data):
+        try:
+            location = self.findCampsite(campsite, data)
+            emails = data[location]["requests"]["email"]
             return emails
         except ValueError:
             print("Campsite requested not found")
 
     def retrieveAllEmails(self):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
+        data = self.loadFromFile()
         allEmails = []
         for i in data:
             if(i["availability"] == "open"):
-                allEmails += self.retrieveEmails(i["campsite"], data)
+                allEmails += self.getCampsiteEmails(i["campsite"], data)
         return allEmails
     
-
+    #Update these below to post and put for an entire Campsite object
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
         data = json.load(f)
