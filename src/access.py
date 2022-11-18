@@ -31,14 +31,16 @@ class NPSParkData:
             return
         for method in ParkFeatures:
             # Configure API request
-            end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
-            response = urllib.request.urlopen(end_point).read()
-            data = json.loads(response.decode('utf-8'))
-            name = formatMethod(method)
-            with open(f'../json_files/{name}_data.json','w') as fp:
-                for line in data['data']:
-                    fp.write(json.dumps(line) + '\n')
-    
+            try:
+                end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
+                response = urllib.request.urlopen(end_point).read()
+                data = json.loads(response.decode('utf-8'))
+                name = formatMethod(method)
+                with open(f'../json_files/{name}_data.json','w') as fp:
+                    for line in data['data']:
+                        fp.write(json.dumps(line) + '\n')
+            except:
+                logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
         
 
 if __name__ == "__main__" :
