@@ -2,6 +2,7 @@ import os
 import sys
 import urllib.request
 import json
+import logging
 from api_lists import API_METHODS as ParkFeatures
 
 def formatMethod(method) -> str:
@@ -15,7 +16,7 @@ class NPSParkData:
     def __init__(self, key):
         self.key = key
 
-    def collectParkData():
+    def collectParkData(self):
         """
             Function: Collects park data
             Uses a data structure from api_lists.py
@@ -24,6 +25,10 @@ class NPSParkData:
             These API Call Names are used 
             to label the JSON File Output
         """
+        if self.key == None:
+            logging.warn("Key has not been set "
+                    "Make sure you have proper credentials\n")
+            return
         for method in ParkFeatures:
             # Configure API request
             end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
