@@ -4,11 +4,11 @@ from SendAlertsView import *
 from JsonModel import *
 
 def main():
-    campsiteDataFile = "campsitesToMonitor.json"
-    #toFile = InterfaceToFile()
+    campsiteDataFile = "src/campsitesToMonitor.json"
     model = JsonModel(campsiteDataFile)
-    controller = Controller(model) #This isn't right, passing the model to the Controller...
-    #Use Type Hints in python to lie to the controller and tell it we are passing the interface class
+    controller = Controller(model) 
+    view = SendAlertsView(model)
+
     
     makeSelection = True
     while(makeSelection):
@@ -17,8 +17,7 @@ def main():
             mockPost = controller.getPostAsInput()
             controller.sendRequestToModel(mockPost)
         elif selection == 2:
-            sendAlerts = SendAlertsView(model)
-            sendAlerts.displayEmails()
+            view.displayEmails()
         elif selection == 0:
             makeSelection = False
         else:

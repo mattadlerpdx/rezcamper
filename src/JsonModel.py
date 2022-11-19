@@ -70,7 +70,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def getAvailableSiteEmails(self, campsite):
         emails = []
         for request in campsite["requests"]:
-            emails += request["email"]
+            emails.append(request["email"])
         return emails
 
     def siteAvailable(self, campsite):
