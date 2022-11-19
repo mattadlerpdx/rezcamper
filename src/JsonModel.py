@@ -57,36 +57,26 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         except ValueError:
             print("Could not add this request to the file.")
 
-### ALERT PROCESSING ####
-
-    #bug: for some reason allEmails is storing individual characters...
+### ALERTS PROCESSING ###
+    
     def retrieveAlerts(self):
         data = self.loadFromFile()
         allEmails = []
         for campsite in data:
-            allEmails += self.getCampsiteEmails(campsite)
+            if(self.siteAvailable(campsite)):
+                allEmails += self.getAvailableSiteEmails(campsite)
         return allEmails
 
-     #does this method do too many things?
-    def getCampsiteEmails(self, campsite):
+    def getAvailableSiteEmails(self, campsite):
         emails = []
-        try:
-            for request in campsite["requests"]:
-                requestDate = request["date"]
-                if(self.requestMatchesOpen(str(requestDate), campsite)):
-                    emails += request["email"]
-            return emails
-        except ValueError:
-            print("Campsite requested not found")
-    
-    def requestMatchesOpen(self, requestDate, campsite):
-        match = False
-        if campsite["dates"][requestDate] == "open":
-            match = True
-        return match
+        for request in campsite["requests"]:
+            emails += request["email"]
+        return emails
 
-
-
+    def siteAvailable(self, campsite):
+        if(campsite["availability"] == "open"):
+            return True
+        return False
 
 ### WORKING WITH THE WEBSCRAPING DATA #####
     
@@ -111,8 +101,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         outFile = open("data.json", "w")
         json.dump(data, outFile)
      
-
-     
     def get(self):
         f = open(self.file)
         data = json.load(f)
@@ -120,6 +108,33 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         for i in data:
             print(i)
    
+
+### FOR FUTURE FEATURES THAT INCLUDE SPECIFIC DATE REQUESTS ####
+    #bug: for some reason allEmails is storing individual characters...
+    def retrieveAlertsDateSpecific(self):
+        data = self.loadFromFile()
+        allEmails = []
+        for campsite in data:
+            allEmails += self.getCampsiteEmailsByDate(campsite)
+        return allEmails
+
+     #does this method do too many things?
+    def getCampsiteEmailsByDate(self, campsite):
+        emails = []
+        try:
+            for request in campsite["requests"]:
+                requestDate = request["date"]
+                if(self.requestDateMatchesOpen(str(requestDate), campsite)):
+                    emails += request["email"]
+            return emails
+        except ValueError:
+            print("Campsite requested not found")
+    
+    def requestDateMatchesOpen(self, requestDate, campsite):
+        match = False
+        if campsite["dates"][requestDate] == "open":
+            match = True
+        return match
 
 
 #JsonModel().get()

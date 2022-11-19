@@ -1,18 +1,37 @@
 [
     {
-        "availability":"open",
         "campsite":"Yellowstone",
-        "dates":
-            {
-                "2023-12-13":"open",
-                "2023-12-14":"open"
-            }
-        ,
+        "availability":"open",
+        "season": "some date range",
         "requests":[
             {
                 "campsite":"Yellowstone",
                 "date":"2023-12-14",
                 "email":"banana@gmail.com"
+            }
+        ]
+    },
+    {
+        "campsite":"LostCreek",
+        "availability":"open",
+        "season": "some date range",
+        "requests":[
+            {
+                "campsite":"LostCreek",
+                "date":"2023-12-14",
+                "email":"apple@gmail.com"
+            }
+        ]
+    },
+    {
+        "campsite":"Yosemite",
+        "availability":"closed",
+        "season": "some date range",
+        "requests":[
+            {
+                "campsite":"Yellowstone",
+                "date":"2023-12-14",
+                "email":"nope@gmail.com"
             }
         ]
     }
