@@ -15,6 +15,7 @@ class NPSParkData:
     def __init__(self, key):
         self.key = key
 
+
     def collectParkData(self):
         """
             Function: Collects park data
@@ -28,13 +29,13 @@ class NPSParkData:
             logging.warn("Key has not been set "
                     "Make sure you have proper credentials\n")
             return
-        for method in ParkFeatures:
+        for getMethod in ParkFeatures:
             # Configure API request
             try:
-                end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
+                end_point = f'https://developer.nps.gov/api/v1/{getMethod}?parkCode=or&api_key={self.key}'
                 response = urllib.request.urlopen(end_point).read()
                 data = json.loads(response.decode('utf-8'))
-                name = formatMethod(method)
+                name = formatMethod(getMethod)
                 with open(f'../json_files/{name}_data.json','w') as fp:
                     for line in data['data']:
                         fp.write(json.dumps(line) + '\n')
