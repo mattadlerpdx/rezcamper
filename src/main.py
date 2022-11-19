@@ -4,7 +4,7 @@ from SendAlertsView import *
 from JsonModel import *
 
 def main():
-    campsiteDataFile = "src/campsitesToMonitor.json"
+    campsiteDataFile = "campsitesToMonitor.json"
     #toFile = InterfaceToFile()
     model = JsonModel(campsiteDataFile)
     controller = Controller(model) #This isn't right, passing the model to the Controller...
