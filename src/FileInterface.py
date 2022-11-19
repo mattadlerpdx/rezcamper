@@ -15,11 +15,14 @@ class InterfaceToFile(ABC):
         pass
 
     @abc.abstractclassmethod
-    def addEmail(self, alertRequest):
+    def addRequest(self, alertRequest):
         pass
 
 class InterfaceFromFile(ABC):
     @abc.abstractclassmethod
     def get(self):
+        pass
+
+    def retrieveAlerts(self):
         pass
 
