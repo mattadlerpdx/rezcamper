@@ -44,7 +44,9 @@ class NPSParkData:
         
 
 if __name__ == "__main__" :
-    API = os.environ["NP_API_KEY"]
-    print(API)
+    API = os.environ["NP_API_KEY"] if os.environ["NP_API_KEY"] else None
+    if API is None:
+        logging.error(f"No API Key Set")
+        sys.exit()
     NPSData = NPSParkData(API)
     NPSData.collectParkData()
