@@ -31,7 +31,7 @@ class NPSParkData:
         for method in ParkFeatures:
             # Configure API request
             try:
-                end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={api_key}'
+                end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={self.key}'
                 response = urllib.request.urlopen(end_point).read()
                 data = json.loads(response.decode('utf-8'))
                 name = formatMethod(method)
@@ -40,9 +40,11 @@ class NPSParkData:
                         fp.write(json.dumps(line) + '\n')
             except:
                 logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
+                return
         
 
 if __name__ == "__main__" :
     API = os.environ["NP_API_KEY"]
+    print(API)
     NPSData = NPSParkData(API)
     NPSData.collectParkData()
