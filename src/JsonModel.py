@@ -7,6 +7,18 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def __init__(self, filename):
         self.file = filename
 
+#### UTILITY FUNCTIONS ####
+    def loadFromFile(self):
+        f = open(self.file, 'r')
+        data = json.load(f)
+        f.close()
+        return data
+
+    def dumpToFile(self, data):
+        f = open(self.file, 'w')
+        json.dump(data, f, indent=4, separators=(',',':'), sort_keys=True)
+        f.close()
+
     def findCampsite(self, campsiteToFind, data):
         location = -1
         index = 0
@@ -14,47 +26,71 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             if (i["campsite"] == campsiteToFind):
                 location = index
             index += 1
+        if(location < 0):
+            raise ValueError ("Campsite requested not available in this system to monitor.")
         return location
 
-    def validateLocation(self, location):
-        if location < 0:
-            raise ValueError("No valid location in JSON file for requested campsite name.")
-        else:
-            return True
-
-    def addEmail(self, alertRequest):
+    def delete(self, emailToFind):
         f = open(self.file)
         data = json.load(f)
         f.close()
-        location = self.findCampsite(alertRequest["campsite"], data)
-        if self.validateLocation(location):
-            data[location]["email"].append(alertRequest["email"])
-            f = open(self.file, 'w')
-            json.dump(data, f)
-            f.close()
-        else:
-            raise ValueError("Campsite requested not available in this system to monitor.")
+        for i, obj in enumerate(data):
+            if (obj["email"] == emailToFind):
+                data.pop(i)
+        outFile = open("updated.json", "w")
+        json.dump(data, outFile)
 
-    def retrieveEmails(self, campsite, data):
-        location = self.findCampsite(campsite, data)
+### REQUEST PROCESSING #####
+
+    def appendRequest(self, alertRequest, location, data):
+        data[location]["requests"].append(alertRequest)
+        self.dumpToFile(data)
+
+    def addRequest(self, alertRequest):
+        data = self.loadFromFile()
+        print(data)
+        print(alertRequest)
         try:
-            self.validateLocation(location)
-            emails = data[location]["email"]
+            index = self.findCampsite(alertRequest["campsite"], data)
+            self.appendRequest(alertRequest, index, data)
+            return True
+        except ValueError:
+            print("Could not add this request to the file.")
+
+### ALERT PROCESSING ####
+
+    #bug: for some reason allEmails is storing individual characters...
+    def retrieveAlerts(self):
+        data = self.loadFromFile()
+        allEmails = []
+        for campsite in data:
+            allEmails += self.getCampsiteEmails(campsite)
+        return allEmails
+
+     #does this method do too many things?
+    def getCampsiteEmails(self, campsite):
+        emails = []
+        try:
+            for request in campsite["requests"]:
+                requestDate = request["date"]
+                if(self.requestMatchesOpen(str(requestDate), campsite)):
+                    emails += request["email"]
             return emails
         except ValueError:
             print("Campsite requested not found")
-
-    def retrieveAllEmails(self):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        allEmails = []
-        for i in data:
-            if(i["availability"] == "open"):
-                allEmails += self.retrieveEmails(i["campsite"], data)
-        return allEmails
     
+    def requestMatchesOpen(self, requestDate, campsite):
+        match = False
+        if campsite["dates"][requestDate] == "open":
+            match = True
+        return match
 
+
+
+
+### WORKING WITH THE WEBSCRAPING DATA #####
+    
+    #Update these below to post and put for an entire Campsite object
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
         data = json.load(f)
@@ -63,7 +99,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
                 'campsite': campsiteToInsert, 'date': dateToInsert}
         data.append(toAppend)
         outFile = open("data.json", "w")
-        json.dump(data, outFile)
+        json.dump(data, outFile, indent=2)
 
     def put(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
@@ -75,15 +111,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         outFile = open("data.json", "w")
         json.dump(data, outFile)
      
-    def delete(self, emailToFind):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        for i, obj in enumerate(data):
-            if (obj["email"] == emailToFind):
-                data.pop(i)
-        outFile = open("updated.json", "w")
-        json.dump(data, outFile)
+
      
     def get(self):
         f = open(self.file)

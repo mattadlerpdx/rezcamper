@@ -6,7 +6,7 @@ from FileInterface import *
 
 
 class Controller:
-    def __init__(self, interface):
+    def __init__(self, interface: InterfaceToFile):
         self.interface = interface
 
     def getPostAsInput(self):
@@ -29,16 +29,16 @@ class Controller:
         except EmailNotValidError:
             print("The post is not valid")
         
-    def updateEmail(self, post):
+    def sendRequestToModel(self, post):
         try:
             alertRequest = self.validatePost(post)
-            self.interface.addEmail(alertRequest)
-            print(f'Your request has been processed. {post["email"]} will recieve an alert if {post["campsite"]} becomes available')
+            print(alertRequest)
+            if(self.interface.addRequest(alertRequest)):
+                print(f'Your request has been processed. {post["email"]} will recieve an alert if {post["campsite"]} becomes available')
         except ValueError:
-            print("Could not create alert request")
+            print("Could not create alert request, no request processed")
 
-    def getEmailsForAlerts(self):
-        return self.interface.retrieveAllEmails()
+ 
 
 
 
