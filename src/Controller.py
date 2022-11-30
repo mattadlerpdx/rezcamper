@@ -3,12 +3,31 @@
 
 from validate import *
 from FileInterface import *
+from SendAlertsView import *
+from JsonModel import *
 
 
 class Controller:
-    def __init__(self, interface: InterfaceToFile):
-        self.interface = interface
+    def __init__(self, campsiteDataFile):
+        self.campsiteDataFile = campsiteDataFile
+        self.model = JsonModel(campsiteDataFile)
+        self.alertView = SendAlertsView(self.model)
 
+    def consoleMenu(self):
+        makeSelection = True
+        while(makeSelection):
+            selection = int(input("Type 1 to make a request, Type 2 to see all emails that will receive alerts"))
+            if selection == 1:
+                mockPost = self.getPostAsInput()
+                self.sendRequestToModel(mockPost, self.model)
+            elif selection == 2:
+                self.alertView.displayEmails()
+            elif selection == 0:
+                makeSelection = False
+            else:
+                print("That was not a valid selection, please try again")
+
+    #placeholder until the UI is set up
     def getPostAsInput(self):
         post = {}
         post["email"] = input("Enter email: ")
@@ -29,11 +48,11 @@ class Controller:
         except EmailNotValidError:
             print("The post is not valid")
         
-    def sendRequestToModel(self, post):
+    def sendRequestToModel(self, post, interface: InterfaceToFile):
         try:
             alertRequest = self.validatePost(post)
             print(alertRequest)
-            if(self.interface.addRequest(alertRequest)):
+            if(interface.addRequest(alertRequest)):
                 print(f'Your request has been processed. {post["email"]} will recieve an alert if {post["campsite"]} becomes available')
         except ValueError:
             print("Could not create alert request, no request processed")
