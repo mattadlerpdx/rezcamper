@@ -1,12 +1,8 @@
 [
     {
         "campsite":"Yellowstone",
-        "dates":
-            {
-                "2023-12-13":"open",
-                "2023-12-14":"open"
-            }
-        ,
+        "availability":"open",
+        "season": "some date range",
         "requests":[
             {
                 "campsite":"Yellowstone",
@@ -14,9 +10,32 @@
                 "email":"banana@gmail.com"
             }
         ]
+    },
+    {
+        "campsite":"LostCreek",
+        "availability":"open",
+        "season": "some date range",
+        "requests":[
+            {
+                "campsite":"LostCreek",
+                "date":"2023-12-14",
+                "email":"apple@gmail.com"
+            }
+        ]
+    },
+    {
+        "campsite":"Yosemite",
+        "availability":"closed",
+        "season": "some date range",
+        "requests":[
+            {
+                "campsite":"Yellowstone",
+                "date":"2023-12-14",
+                "email":"nope@gmail.com"
+            }
+        ]
     }
     
 ]
    
-=======
-[{"date": "2023-12-13", "campsite": "Yellowstone", "email": ["matt@gmail.com", "hello@myemail.com", "banana@gmail.com", "hello@valid.com", "tkral@pdx.edu"], "availability": "open"}, {"date": "yo", "campsite": "there", "email": ["itsopen@gmail.com", "some@gmail.com", "tryagain@ok.com"], "availability": "open"}, {"date": "f", "campsite": "t", "email": ["hi@nope.com"], "availability": "closed"}, {"email": ["nope@gmail.com"], "campsite": "Olympia", "date": "2023-05-21", "availability": "closed"}]
+
