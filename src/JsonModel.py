@@ -31,9 +31,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         return location
 
     def delete(self, emailToFind):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
+        data = self.loadFromFile()
         for i, obj in enumerate(data):
             if (obj["email"] == emailToFind):
                 data.pop(i)
@@ -79,6 +77,23 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         return False
 
 ### WORKING WITH THE WEBSCRAPING DATA #####
+
+    def filterWebData(self, sourceFile):
+        f = open(sourceFile, 'r')
+        sites = json.load(f)
+        f.close()
+        data = []
+        for camp in sites:
+            singleSite = {"campsite":"", "availability":"", "requests":[]}
+            singleSite["campsite"] = camp["name"]
+            if camp["reservationUrl"]:
+                singleSite["availability"] = "open"
+            else:
+                singleSite["availability"] = "closed"
+            data.append(singleSite)
+        print (data) #testline
+        return data
+            
     
     #Update these below to post and put for an entire Campsite object
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
@@ -137,11 +152,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         return match
 
 
-#JsonModel().get()
-#JsonModel().post('test@gmail.com','Olympia','2023-05-21')
-#JsonModel().get()
-#JsonModel().delete('test@gmail.com')
-#JsonModel().get()
-#print(JsonModel().findCampsite('Olympia'))
 
-
+#test filterWebData
+model = JsonModel("src/campsitesToMonitor.json")
+model.filterWebData("json_files/campgrounds_data.json")
