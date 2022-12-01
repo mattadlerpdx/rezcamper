@@ -5,7 +5,7 @@ import json
 import logging
 from api_lists import API_METHODS as ParkFeatures
 
-def formatMethod(method) -> str:
+def formatMethod(method):
     if '/' in method:
         name = method.replace('/','-')
         return name
@@ -28,6 +28,7 @@ class NPSParkData:
             logging.warn("Key has not been set "
                     "Make sure you have proper credentials\n")
             return
+        campgrounds = []
         for method in ParkFeatures:
             # Configure API request
             try:
@@ -37,12 +38,31 @@ class NPSParkData:
                 name = formatMethod(method)
                 with open(f'../json_files/{name}_data.json','w') as fp:
                     for line in data['data']:
-                        fp.write(json.dumps(line) + '\n')
+                        fp.write(json.dumps(line))
             except:
                 logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
                 return
-        
+    
+    def campInfo(self):
+        """
+            collect park info
+            based on existing park information
+            calls api endpoint and writes 
+            json objects in to a list
+        """
+        try:
+            end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={self.key}'
+            response = urllib.request.urlopen(end_point).read()
+            data = json.loads(response.decode('utf-8'))
+            name = formatMethod(method)
+            with open(f'../json_files/{name}_data.json','w') as fp:
+                for line in data['data']:
+                    fp.write(json.dumps(line))
+        except:
+            logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
+            return
 
+                
 if __name__ == "__main__" :
     API = os.environ["NP_API_KEY"] if os.environ["NP_API_KEY"] else None
     if API is None:
@@ -50,3 +70,4 @@ if __name__ == "__main__" :
         sys.exit()
     NPSData = NPSParkData(API)
     NPSData.collectParkData()
+    NPSData.campInfo()
