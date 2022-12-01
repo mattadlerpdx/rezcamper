@@ -7,6 +7,16 @@
                 "campsite":"277 North Campground",
                 "date":"2023-12-14",
                 "email":"banana@gmail.com"
+            },
+            {
+                "campsite":"277 North Campground",
+                "date":"2022-03-03",
+                "email":"apple@gmail.com"
+            },
+            {
+                "campsite":"277 North Campground",
+                "date":"2022-03-03",
+                "email":"kiwi@gmail.com"
             }
         ]
     }
