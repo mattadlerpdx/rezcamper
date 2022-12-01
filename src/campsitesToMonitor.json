@@ -1,7 +1,7 @@
 [
     {
-        "availability": "open",
-        "campsite":"Yellowstone",
+        "availability":"open",
+        "campsite":"277 North Campground",
         "requests":[
             {
                 "campsite":"Yellowstone",
@@ -10,5 +10,4 @@
             }
         ]
     }
-    
 ]
