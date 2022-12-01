@@ -2,7 +2,7 @@
 from Controller import *
 
 def main():
-    campsiteDataFile = "campsitesToMonitor.json"
+    campsiteDataFile = "src/campsitesToMonitor.json"
     controller = Controller(campsiteDataFile) 
     controller.consoleMenu()
 
