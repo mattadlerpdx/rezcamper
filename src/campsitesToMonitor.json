@@ -19,5 +19,27 @@
                 "email":"kiwi@gmail.com"
             }
         ]
+    },
+    {
+        "availability":"open",
+        "campsite":"Akers Group Campground",
+        "requests":[
+            {
+                "campsite":"Akers Group Campground",
+                "date":"2023-01-01",
+                "email":"onion@gmail.com"
+            }
+        ]
+    },
+    {
+        "availability":"closed",
+        "campsite":"Belle Fourche River Campground",
+        "requests":[
+            {
+                "campsite":"Belle Fourche River Campground",
+                "date":"2023-04-25",
+                "email":"papaya@gmail.com"
+            }
+        ]
     }
 ]

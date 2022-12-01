@@ -3,13 +3,13 @@ from FileInterface import *
 from access import *
 import json
 
-
 class JsonModel(InterfaceToFile, InterfaceFromFile):
-    def __init__(self, filename, key):
-        self.file = filename
+    def __init__(self, campsitesToMonitor, key):
+        self.file = campsitesToMonitor
         self.webKey = key
 
 #### UTILITY FUNCTIONS ####
+
     def loadFromFile(self):
         f = open(self.file, 'r')
         data = json.load(f)
@@ -86,7 +86,11 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         return webData
 
     def filterWebData(self):
-        sites = self.getWebData()
+        #### temporary link to test file, call getWebData() when JSON bug fixed
+        f = open("src/testWebFile.json", 'r')
+        sites = json.load(f)
+        f.close()
+        ####
         data = []
         for camp in sites:
             singleSite = {"campsite":"", "availability":"", "requests":[]}
@@ -109,12 +113,8 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def updateCampsitesToMonitor(self):
         webData = self.filterWebData()
         toDump = self.saveCurrentRequests(webData)
-        print(toDump)
         self.dumpToFile(toDump)
             
     
 
 
-#test filterWebData
-model = JsonModel("src/campsitesToMonitor.json", "WFiiKkgW1oaFCB2oLzUCYhmdu9cEQCPgPnkClMmd")
-model.updateCampsitesToMonitor()

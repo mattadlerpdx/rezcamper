@@ -8,9 +8,9 @@ from JsonModel import *
 
 
 class Controller:
-    def __init__(self, campsiteDataFile):
+    def __init__(self, campsiteDataFile, webKey):
         self.campsiteDataFile = campsiteDataFile
-        self.model = JsonModel(campsiteDataFile)
+        self.model = JsonModel(campsiteDataFile, webKey)
         self.alertView = SendAlertsView(self.model)
 
     def consoleMenu(self):
@@ -21,10 +21,10 @@ class Controller:
                 mockPost = self.getPostAsInput()
                 self.sendRequestToModel(mockPost, self.model)
             elif selection == 2:
-                self.alertView.displayEmails()
+                self.alertView.sendEmails()
             elif selection == 3:
-                #self.model.updateCampsitesToMonitor()
-                print("Not available: bug fix in progress")
+                self.model.updateCampsitesToMonitor()
+                print("Campsites in campsitesToMonitor.json have been updated")
             elif selection == 0:
                 makeSelection = False
             else:
