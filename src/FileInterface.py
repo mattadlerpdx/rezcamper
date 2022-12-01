@@ -3,11 +3,11 @@ import json
 from abc import ABC, abstractmethod
 class InterfaceToFile(ABC):
     @abstractmethod
-    def put(self):
+    def filterWebData(self):
         pass
 
     @abc.abstractclassmethod
-    def post(self):
+    def saveCurrentRequests(self):
         pass
 
     @abc.abstractclassmethod
@@ -20,7 +20,7 @@ class InterfaceToFile(ABC):
 
 class InterfaceFromFile(ABC):
     @abc.abstractclassmethod
-    def get(self):
+    def updateCampsitesToMonitor(self):
         pass
 
     def retrieveAlerts(self):
