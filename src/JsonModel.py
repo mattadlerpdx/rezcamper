@@ -112,5 +112,5 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 
 #test filterWebData
-model = JsonModel("src/campsitesToMonitor.json")
-model.updateCampsitesToMonitor("src/testWebFile.json")
+#model = JsonModel("src/campsitesToMonitor.json")
+#model.updateCampsitesToMonitor("src/testWebFile.json")
