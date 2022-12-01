@@ -10,7 +10,7 @@ class SendAlertsView():
     def getAlerts(self):
         self.alerts = self.interface.retrieveAlerts()
 
-    def displayEmails(self):
+    def sendEmails(self):
         self.getAlerts()
         print(f'These emails should receive an alert that their campsites are available: {self.alerts}')
         sender = 'admin@example.com'
