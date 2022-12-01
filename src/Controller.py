@@ -16,12 +16,15 @@ class Controller:
     def consoleMenu(self):
         makeSelection = True
         while(makeSelection):
-            selection = int(input("Type 1 to make a request, Type 2 to see all emails that will receive alerts, Type 0 to quit"))
+            selection = int(input("Type 1 to make a request, Type 2 to see all emails that will receive alerts, Type 3 to update the Campsites we monitor from the National Parks API Type 0 to quit"))
             if selection == 1:
                 mockPost = self.getPostAsInput()
                 self.sendRequestToModel(mockPost, self.model)
             elif selection == 2:
                 self.alertView.displayEmails()
+            elif selection == 3:
+                #self.model.updateCampsitesToMonitor()
+                print("Not available: bug fix in progress")
             elif selection == 0:
                 makeSelection = False
             else:
