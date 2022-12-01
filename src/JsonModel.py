@@ -91,10 +91,23 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             else:
                 singleSite["availability"] = "closed"
             data.append(singleSite)
-        print (data) #testline
+            print(data)
         return data
-            
+
+    def saveCurrentRequests(self, data):
+        sitesMonitored = self.loadFromFile()
+        for monitored in sitesMonitored:
+            for site in data:
+                if monitored["campsite"] == site["campsite"]:
+                    site["requests"] = monitored["requests"]
+        return data
     
+    def updateCampsitesToMonitor(self, webFile):
+        webData = self.filterWebData(webFile)
+        toDump = self.saveCurrentRequests(webData)
+        print(toDump)
+        self.dumpToFile(toDump)
+            
     #Update these below to post and put for an entire Campsite object
     def post(self, emailToInsert, campsiteToInsert, dateToInsert):
         f = open(self.file)
@@ -155,4 +168,4 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 #test filterWebData
 model = JsonModel("src/campsitesToMonitor.json")
-model.filterWebData("json_files/campgrounds_data.json")
+model.updateCampsitesToMonitor("src/test.json")
