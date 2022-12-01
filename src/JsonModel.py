@@ -1,11 +1,13 @@
 
 from FileInterface import *
+from access import *
 import json
 
 
 class JsonModel(InterfaceToFile, InterfaceFromFile):
-    def __init__(self, filename):
+    def __init__(self, filename, key):
         self.file = filename
+        self.webKey = key
 
 #### UTILITY FUNCTIONS ####
     def loadFromFile(self):
@@ -78,11 +80,13 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 ### WORKING WITH THE WEBSCRAPING DATA #####
 
-    def filterWebData(self, sourceFile):
-        f = open(sourceFile, 'r')
-        sites = json.load(f)
-        print(sites)
-        f.close()
+    def getWebData(self):
+        parkAPI = NPSParkData(self.webKey)
+        webData = parkAPI.campInfo()
+        return webData
+
+    def filterWebData(self):
+        sites = self.getWebData()
         data = []
         for camp in sites:
             singleSite = {"campsite":"", "availability":"", "requests":[]}
@@ -102,8 +106,8 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
                     site["requests"] = monitored["requests"]
         return data
     
-    def updateCampsitesToMonitor(self, webFile):
-        webData = self.filterWebData(webFile)
+    def updateCampsitesToMonitor(self):
+        webData = self.filterWebData()
         toDump = self.saveCurrentRequests(webData)
         print(toDump)
         self.dumpToFile(toDump)
@@ -112,5 +116,5 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 
 #test filterWebData
-model = JsonModel("src/campsitesToMonitor.json")
-model.updateCampsitesToMonitor("json_files/campgrounds_data.json")
+model = JsonModel("src/campsitesToMonitor.json", "WFiiKkgW1oaFCB2oLzUCYhmdu9cEQCPgPnkClMmd")
+model.updateCampsitesToMonitor()
