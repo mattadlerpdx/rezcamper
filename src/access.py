@@ -43,21 +43,21 @@ class NPSParkData:
                 logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
                 return
     
-    def campInfo(self):
+    def campInfo(self) -> list:
         """
             collect park info
             based on existing park information
             calls api endpoint and writes 
             json objects in to a list
         """
+        campgrounds = []
         try:
-            end_point = f'https://developer.nps.gov/api/v1/{method}?parkCode=or&api_key={self.key}'
+            end_point = f'https://developer.nps.gov/api/v1/campgrounds?parkCode=or&api_key={self.key}'
             response = urllib.request.urlopen(end_point).read()
             data = json.loads(response.decode('utf-8'))
-            name = formatMethod(method)
-            with open(f'../json_files/{name}_data.json','w') as fp:
-                for line in data['data']:
-                    fp.write(json.dumps(line))
+            for line in data['data']:
+                campgrounds.append(json.dumps(line))
+            return campgrounds
         except:
             logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
             return
