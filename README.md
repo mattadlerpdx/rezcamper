@@ -18,5 +18,7 @@ The current UI is a console based menu. To run:
  ```python3 src/main.py``` to run the program.
  
   If you select the option to send emails, you can view the confirmation messages in the first terminal. As of now emails are not actually being sent due to an issue with gmail no longer supports our chosen email server script.
+  
+  As of 11/30/2022 option 3 on the console menu, to update the campsites we monitor with real webdata, does not work due to a bug in converting our API data file into an iterable list of JSON objects. A fix in being worked on.
 
 
