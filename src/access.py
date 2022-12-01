@@ -69,5 +69,6 @@ if __name__ == "__main__" :
         logging.error(f"No API Key Set")
         sys.exit()
     NPSData = NPSParkData(API)
-    NPSData.collectParkData()
-    NPSData.campInfo()
+    if not os.path.isdir(f'../json_files'):
+        NPSData.collectParkData()
+    campgrounds = NPSData.campInfo()
