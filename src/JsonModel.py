@@ -113,4 +113,4 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 #test filterWebData
 model = JsonModel("src/campsitesToMonitor.json")
-model.updateCampsitesToMonitor("src/test.json")
+model.updateCampsitesToMonitor("src/testwebFile.json")
