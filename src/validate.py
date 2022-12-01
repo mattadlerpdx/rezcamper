@@ -3,7 +3,7 @@
 #https: // docs.python.org/3/library/time.html#time.strftime
 
 
-from email_validator import validate_email, EmailNotValidError
+#from email_validator import validate_email, EmailNotValidError
 from datetime import datetime
 import unittest
 

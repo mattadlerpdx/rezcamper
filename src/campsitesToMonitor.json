@@ -1,0 +1,13 @@
+[
+    {
+        "campsite" : "277 North Campground",
+        "availability": "open",
+        "requests":[
+            {
+                "campsite": "277 North Campground",
+                "date": "2023-12-14",
+                "email":"banana@gmail.com"
+            }
+        ]
+    }
+]
