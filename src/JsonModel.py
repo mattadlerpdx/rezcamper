@@ -31,9 +31,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         return location
 
     def delete(self, emailToFind):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
+        data = self.loadFromFile()
         for i, obj in enumerate(data):
             if (obj["email"] == emailToFind):
                 data.pop(i)
@@ -79,69 +77,40 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         return False
 
 ### WORKING WITH THE WEBSCRAPING DATA #####
+
+    def filterWebData(self, sourceFile):
+        f = open(sourceFile, 'r')
+        sites = json.load(f)
+        f.close()
+        data = []
+        for camp in sites:
+            singleSite = {"campsite":"", "availability":"", "requests":[]}
+            singleSite["campsite"] = camp["name"]
+            if camp["reservationUrl"]:
+                singleSite["availability"] = "open"
+            else:
+                singleSite["availability"] = "closed"
+            data.append(singleSite)
+            print(data)
+        return data
+
+    def saveCurrentRequests(self, data):
+        sitesMonitored = self.loadFromFile()
+        for monitored in sitesMonitored:
+            for site in data:
+                if monitored["campsite"] == site["campsite"]:
+                    site["requests"] = monitored["requests"]
+        return data
     
-    #Update these below to post and put for an entire Campsite object
-    def post(self, emailToInsert, campsiteToInsert, dateToInsert):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        toAppend = {'email': emailToInsert,
-                'campsite': campsiteToInsert, 'date': dateToInsert}
-        data.append(toAppend)
-        outFile = open("data.json", "w")
-        json.dump(data, outFile, indent=2)
-
-    def put(self, emailToInsert, campsiteToInsert, dateToInsert):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        toAppend = {'email': emailToInsert,
-                'campsite': campsiteToInsert, 'date': dateToInsert}
-        data.append(toAppend)
-        outFile = open("data.json", "w")
-        json.dump(data, outFile)
-     
-    def get(self):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        for i in data:
-            print(i)
-   
-
-### FOR FUTURE FEATURES THAT INCLUDE SPECIFIC DATE REQUESTS ####
-    #bug: for some reason allEmails is storing individual characters...
-    def retrieveAlertsDateSpecific(self):
-        data = self.loadFromFile()
-        allEmails = []
-        for campsite in data:
-            allEmails += self.getCampsiteEmailsByDate(campsite)
-        return allEmails
-
-     #does this method do too many things?
-    def getCampsiteEmailsByDate(self, campsite):
-        emails = []
-        try:
-            for request in campsite["requests"]:
-                requestDate = request["date"]
-                if(self.requestDateMatchesOpen(str(requestDate), campsite)):
-                    emails += request["email"]
-            return emails
-        except ValueError:
-            print("Campsite requested not found")
+    def updateCampsitesToMonitor(self, webFile):
+        webData = self.filterWebData(webFile)
+        toDump = self.saveCurrentRequests(webData)
+        print(toDump)
+        self.dumpToFile(toDump)
+            
     
-    def requestDateMatchesOpen(self, requestDate, campsite):
-        match = False
-        if campsite["dates"][requestDate] == "open":
-            match = True
-        return match
 
 
-#JsonModel().get()
-#JsonModel().post('test@gmail.com','Olympia','2023-05-21')
-#JsonModel().get()
-#JsonModel().delete('test@gmail.com')
-#JsonModel().get()
-#print(JsonModel().findCampsite('Olympia'))
-
-
+#test filterWebData
+model = JsonModel("src/campsitesToMonitor.json")
+model.updateCampsitesToMonitor("src/test.json")
