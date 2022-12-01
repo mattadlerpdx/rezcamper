@@ -81,6 +81,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
     def filterWebData(self, sourceFile):
         f = open(sourceFile, 'r')
         sites = json.load(f)
+        print(sites)
         f.close()
         data = []
         for camp in sites:
@@ -91,7 +92,6 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
             else:
                 singleSite["availability"] = "closed"
             data.append(singleSite)
-            print(data)
         return data
 
     def saveCurrentRequests(self, data):
@@ -112,5 +112,5 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
 
 
 #test filterWebData
-#model = JsonModel("src/campsitesToMonitor.json")
-#model.updateCampsitesToMonitor("src/testWebFile.json")
+model = JsonModel("src/campsitesToMonitor.json")
+model.updateCampsitesToMonitor("json_files/campgrounds_data.json")
