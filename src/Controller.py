@@ -16,7 +16,7 @@ class Controller:
     def consoleMenu(self):
         makeSelection = True
         while(makeSelection):
-            selection = int(input("Type 1 to make a request, Type 2 to see all emails that will receive alerts"))
+            selection = int(input("Type 1 to make a request, Type 2 to see all emails that will receive alerts, Type 0 to quit"))
             if selection == 1:
                 mockPost = self.getPostAsInput()
                 self.sendRequestToModel(mockPost, self.model)
@@ -42,7 +42,7 @@ class Controller:
             validPost["campsite"] = validateCampsiteName(post["campsite"])
             if validateDate(post["date"]):
                 validPost["date"] = post["date"]
-            return validPost
+            return True
         except ValueError:
             print("The post is not valid")
         except EmailNotValidError:
@@ -50,10 +50,9 @@ class Controller:
         
     def sendRequestToModel(self, post, interface: InterfaceToFile):
         try:
-            alertRequest = self.validatePost(post)
-            print(alertRequest)
-            if(interface.addRequest(alertRequest)):
-                print(f'Your request has been processed. {post["email"]} will recieve an alert if {post["campsite"]} becomes available')
+            if self.validatePost(post):
+                if(interface.addRequest(post)):
+                    print(f'Your request has been processed. {post["email"]} will recieve an alert if {post["campsite"]} becomes available')
         except ValueError:
             print("Could not create alert request, no request processed")
 
