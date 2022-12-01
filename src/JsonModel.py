@@ -108,62 +108,7 @@ class JsonModel(InterfaceToFile, InterfaceFromFile):
         print(toDump)
         self.dumpToFile(toDump)
             
-    #Update these below to post and put for an entire Campsite object
-    def post(self, emailToInsert, campsiteToInsert, dateToInsert):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        toAppend = {'email': emailToInsert,
-                'campsite': campsiteToInsert, 'date': dateToInsert}
-        data.append(toAppend)
-        outFile = open("data.json", "w")
-        json.dump(data, outFile, indent=2)
-
-    def put(self, emailToInsert, campsiteToInsert, dateToInsert):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        toAppend = {'email': emailToInsert,
-                'campsite': campsiteToInsert, 'date': dateToInsert}
-        data.append(toAppend)
-        outFile = open("data.json", "w")
-        json.dump(data, outFile)
-     
-    def get(self):
-        f = open(self.file)
-        data = json.load(f)
-        f.close()
-        for i in data:
-            print(i)
-   
-
-### FOR FUTURE FEATURES THAT INCLUDE SPECIFIC DATE REQUESTS ####
-    #bug: for some reason allEmails is storing individual characters...
-    def retrieveAlertsDateSpecific(self):
-        data = self.loadFromFile()
-        allEmails = []
-        for campsite in data:
-            allEmails += self.getCampsiteEmailsByDate(campsite)
-        return allEmails
-
-     #does this method do too many things?
-    def getCampsiteEmailsByDate(self, campsite):
-        emails = []
-        try:
-            for request in campsite["requests"]:
-                requestDate = request["date"]
-                if(self.requestDateMatchesOpen(str(requestDate), campsite)):
-                    emails += request["email"]
-            return emails
-        except ValueError:
-            print("Campsite requested not found")
     
-    def requestDateMatchesOpen(self, requestDate, campsite):
-        match = False
-        if campsite["dates"][requestDate] == "open":
-            match = True
-        return match
-
 
 
 #test filterWebData
