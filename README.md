@@ -10,3 +10,6 @@ The application checks pulls data from the API and stored in in our internal JSO
 As of now, the email sending functionality is still buggy, and they are not being correctly sent out. but we can verify that the correct emails are being collected.
 
 
+To see email results in console start a new terminal and run the following command:
+python -m smtpd -c DebuggingServer -n localhost:1025
+
