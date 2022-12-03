@@ -28,7 +28,6 @@ class NPSParkData:
             logging.warn("Key has not been set "
                     "Make sure you have proper credentials\n")
             return
-        campgrounds = []
         for method in ParkFeatures:
             # Configure API request
             try:
@@ -50,17 +49,17 @@ class NPSParkData:
             calls api endpoint and writes 
             json objects in to a list
         """
+        path = f'../json_files/campgrounds_data.json'
         campgrounds = []
         try:
-            end_point = f'https://developer.nps.gov/api/v1/campgrounds?parkCode=or&api_key={self.key}'
-            response = urllib.request.urlopen(end_point).read()
-            data = json.loads(response.decode('utf-8'))
-            for line in data['data']:
-                campgrounds.append(json.dumps(line))
-            return campgrounds
+            with open(f'{path}','r') as fp:
+                for line in fp:
+                    item = json.loads(line)
+                    campgrounds.append(item)
         except:
             logging.error(f"Something went wrong with the API Calls: {logging.ERROR}")
             return
+        return campgrounds
 
                 
 if __name__ == "__main__" :
